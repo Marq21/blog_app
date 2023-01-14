@@ -2,27 +2,87 @@
 <html xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" Type="text/css" th:href="@{css/style.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>American Shnizel's news</title>
 </head>
 <body>
 <header th:insert="~{blocks/header :: header}"></header>
-<div class="container" th:each="news : ${fullTextArticle}">
-    <h2 class="blog-post-title" th:text="${news.name}"></h2>
-    <article class="blog-post">
-        <p style="word-break: break-all;" th:text="${news.fullDescription}"></p>
-        <p style="font-weight: bold;opacity: 50%;" th:text="'Опубликовано ' + ${#temporals.format(news.created_at, 'dd.MM.yyyy HH:mm')}"></p>
-        <hr>
-        <nav class="blog-pagination" aria-label="Pagination">
-            <a class="btn btn-outline-primary" href="#">Older</a>
-            <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-        </nav>
-    </article>
+<div class="main-full-article-text-container">
+    <div class="top-views-wrapper">
+        <div class="popular-text">
+            Топ просмотров
+        </div>
+        <div class="top-views-article">
+            <div class="top-views-article-title" th:each="topViewArticle : ${topViewsList}">
+                <a class="top-views-articles-name" th:href="${topViewArticle.id}"
+                   th:text="${topViewArticle.name}"></a>
+                <div class="top-views-img-mini-wrapper">
+                    <img class="top-views-img-mini"
+                         src="" alt="mini_img"
+                         th:src="${topViewArticle.imageUri}">
+                </div>
+                <div class="view-wrapper-for-top-views">
+                    <img class="view-icon"
+                         th:src="@{../images/view-icon.png}"
+                         height="15" width="15"
+                         alt="watch" src="#"/>
+                    <span class="views-top" th:text="(${topViewArticle.views < 1000}
+                    ? ${topViewArticle.views} :
+                    (${topViewArticle.views >= 1000 and topViewArticle.views < 1000000}
+                    ? (((${topViewArticle.views} - (${topViewArticle.views} % 1000)) / 1000) + (${topViewArticle.views} % 1000))+ ' тыс.' :
+                     (((${topViewArticle.views} - (${topViewArticle.views} % 1000)) / 1000000) + (${topViewArticle.views} % 1000000)) + ' мил.'))"></span>
+                    <span class="view-top-date"
+                          th:text="${#temporals.format(topViewArticle.created_at, 'dd.MM.yyyy')}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-main-container" th:each="news : ${fullTextArticle}">
+        <div class="blog-post-title-wrapper">
+            <h2 class="blog-post-title" th:text="${news.name}"></h2>
+        </div>
+        <div class="date-blog-post-wrapper">
+            <span class="date-blog-post"
+                  th:text="'Опубликовано ' + ${#temporals.format(news.created_at, 'dd.MM.yyyy HH:mm')}">
+            </span>
+            <span class="main-views-wrapper">
+                <img class="view-icon"
+                     th:src="@{../images/view-icon.png}"
+                     height="15" width="15"
+                     alt="watch" src="#"/>
+                <span class="views-top-full-text" th:text="(${news.views < 1000}
+                    ? ${news.views} :
+                    (${news.views >= 1000 and news.views < 1000000}
+                    ? (((${news.views} - (${news.views} % 1000)) / 1000) + (${news.views} % 1000))+ ' тыс.' :
+                     (((${news.views} - (${news.views} % 1000)) / 1000000) + (${news.views} % 1000000)) + ' мил.'))"></span>
+            </span>
+        </div>
+        <img class="full-text-main-img" id="full-txt-mainImg" src="" alt="" th:src="${news.imageUri}">
+        <div class="full-text-article-content">
+            <article class="blog-post">
+                <p th:text="${news.fullDescription}"></p>
+                <!--                <div class="main-img-wrapper">-->
+                <!--                </div>-->
+                <!--                <hr>-->
+            </article>
+        </div>
+        <div class="comment-block">
+        </div>
+    </div>
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01" alt="modal" src="">
+        <div id="caption"></div>
+    </div>
+    <div class="ad-block-news">
+        <div class="ad-block4"></div>
+        <div class="ad-block2"></div>
+        <div class="ad-block3"></div>
+    </div>
 </div>
 <footer th:insert="~{blocks/footer :: footer}"></footer>
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{js/mainJS.js}"></script>
 </html>

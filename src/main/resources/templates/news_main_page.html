@@ -1,23 +1,103 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
+    <link rel="icon" href="data:,">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" Type="text/css" th:href="@{css/style.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>American Shnizel's news</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
-
 <header th:insert="~{blocks/header :: header}"></header>
-<div class="container" style="text-align: center">
-    <img th:src="@{/images/american_shnizel_avatar.jpg}" alt="" src=""/>
-</div>
-<div>
-    <a href="/create_article" class="badge badge-primary">Создать новость</a>
+<div class="all-news-block">
+    <div class="top-views-wrapper">
+        <div class="popular-text">
+            Топ просмотров
+        </div>
+        <div class="top-views-article">
+            <div class="top-views-article-title" th:each="topViewArticle : ${topViews}">
+                <a class="top-views-articles-name" th:href="${topViewArticle.id}" th:text="${topViewArticle.name}"></a>
+                <div class="top-views-img-mini-wrapper">
+                    <img class="top-views-img-mini"
+                         src="" alt="mini_img"
+                         th:src="${topViewArticle.imageUri}">
+                </div>
+                <div class="view-wrapper-for-top-views">
+                    <img class="view-icon"
+                         th:src="@{../images/view-icon.png}"
+                         height="15" width="15"
+                         alt="watch" src="#"/>
+                    <span class="views-top" th:text="(${topViewArticle.views < 1000}
+                    ? ${topViewArticle.views} :
+                    (${topViewArticle.views >= 1000 and topViewArticle.views < 1000000}
+                    ? (((${topViewArticle.views} - (${topViewArticle.views} % 1000)) / 1000) + (${topViewArticle.views} % 1000))+ ' тыс.' :
+                     (((${topViewArticle.views} - (${topViewArticle.views} % 1000)) / 1000000) + (${topViewArticle.views} % 1000000)) + ' мил.'))"></span>
+                    <span class="view-top-date"
+                          th:text="${#temporals.format(topViewArticle.created_at, 'dd.MM.yyyy')}"></span>
+                </div>
+            </div>
+        </div>
+        <div class="foreCastFrame">
+            <iframe
+                    title="forecast"
+                    style="width:100%;border:0;overflow:hidden;background-color:transparent;height:259rem;"
+                    scrolling="no"
+                    src="https://fortrader.org/informers/getInformer?st=8&cat=7&title=%D0%9A%D1%83%D1%80%D1%81%D1%8B%20%D0%B2%D0%B0%D0%BB%D1%8E%D1%82%20%D0%A6%D0%91%20%D0%A0%D0%A4&texts=%7B%22toolTitle%22%3A%22%D0%92%D0%B0%D0%BB%D1%8E%D1%82%D0%B0%22%2C%22todayCourse%22%3A%22RUB%22%7D&mult=0.87&showGetBtn=0&hideHeader=0&hideDate=0&w=270&codes=1&colors=false&items=2%2C21%2C30&columns=todayCourse&toCur=11111">
+            </iframe>
+        </div>
+    </div>
+    <div class="articles">
+        <div class="article-table"
+             th:each="article : ${articlesList}">
+            <!--             th:style="'background: url(' + ${article.imageUri} + ') no-repeat;background-size: 100%; background-position: center center'">-->
+            <a class="article-href" th:href="${article.id}">
+                <div class="article-list">
+                    <div class="news-info">
+                        <div class="name-background">
+                            <div class="article-name" th:text="${article.name}"></div>
+                        </div>
+                        <div class="date-wrap">
+                            <!--                        <div class="date" th:text="${#temporals.format(article.created_at, 'dd.MM.yyyy HH:mm')}"></div>-->
+                            <img class="calendar" th:src="@{../images/icons8-календарь-16.png}" height="16" width="16"
+                                 alt="calendar" src="#"/>
+                            <div class="date" th:text="${#temporals.format(article.created_at, 'dd.MM.yyyy')}"></div>
+                            <img class="watch" th:src="@{../images/icons8-настенные-часы-24.png}" height="17" width="17"
+                                 alt="watch" src="#"/>
+                            <div class="date" th:text="${#temporals.format(article.created_at, 'HH:mm')}"></div>
+                        </div>
+                        <br>
+                        <div class="full-desc-block"><p th:text="${article.fullDescription}"></p></div>
+                        <a th:href="${article.id}" class="btn-keep-going">читать далее</a>
+                        <div class="view-background">
+                            <div class="view-wrapper">
+                                <img class="view-icon"
+                                     th:src="@{../images/view-icon.png}"
+                                     height="20" width="20"
+                                     alt="watch" src="#"/>
+                                <span class="views" th:text="(${article.views < 1000}
+                    ? ${article.views} :
+                    (${article.views >= 1000 and article.views < 1000000}
+                    ? (((${article.views} - (${article.views} % 1000)) / 1000) + (${article.views} % 1000))+ ' тыс.' :
+                     (((${article.views} - (${article.views} % 1000)) / 1000000) + (${article.views} % 1000000)) + ' мил.'))"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-img-wrapper">
+                        <img class="main-img" src="" alt="main_img" th:src="${article.imageUri}">
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="ad-block-news">
+        <div class="ad-block4"></div>
+        <div class="ad-block2"></div>
+        <div class="ad-block3"></div>
+    </div>
 </div>
 <footer th:insert="~{blocks/footer :: footer}"></footer>
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
 </body>
 </html>

@@ -1,12 +1,13 @@
 <div th:fragment="header">
-  <div class="container">
-    <header class="d-flex justify-content-center py-3">
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Главная страница</a></li>
-        <li class="nav-item"><a href="/fresh_news" class="nav-link">Свежие новости</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">О нас</a></li>
-      </ul>
-    </header>
+  <div class="header">
+    <img th:src="@{../images/american_shnizel_avatar.jpg}" class="logo" alt="logo_" src="">
+    <div class="title-shnizel">American shnizel | news</div>
+    <div class="header-right">
+      <a class="header-text" href="/">Главная страница</a>
+      <a class="header-text" href="/news">Все новости</a>
+      <a class="header-text" href="//t.me/americanShnizel">О нас</a>
+      <a class="header-text" href="#">Вопросы и предложения</a>
+    </div>
   </div>
   <hr>
 </div>

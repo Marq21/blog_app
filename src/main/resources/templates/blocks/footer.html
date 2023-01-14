@@ -1,14 +1,12 @@
 <div th:fragment="footer">
-  <div class="container">
-    <footer class="py-3 my-4">
-      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Главная</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">О нас</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Реклама</a></li>
-      </ul>
-      <a title="Telegram" href="https://telegram.me/americanShnizel" target="_blank" style="font-size: small;font-weight: bold;">
-        <img th:src="@{/images/telegram-icon-new.png}" alt="" src=""/>Мы в Telegram</a>
-      <p class="text-center text-muted">© American shnizel | news</p>
+    <footer>
+        <div class="telegram">
+            <a href="https://t.me/americanShnizel">
+                <img class="tg-logo" th:src="@{../images/telegram-icon-new.png}" height="35"
+                     width="35" alt="tg-ico"/>
+                <span class="tg-text">Мы в Telegram</span>
+            </a>
+        </div>
     </footer>
-  </div>
+
 </div>

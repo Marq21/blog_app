@@ -1,7 +1,19 @@
 version: "3"
 services:
+  mysqldb:
+    image: mysql:5.7
+    networks:
+      - springmysql-net
+    environment:
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
   server:
-    image: blog_app
+    image: blog_app:v1
     ports:
       - "8080:8080"
     environment:
@@ -10,16 +22,5 @@ services:
       - springmysql-net
     depends_on:
       - mysqldb
-
-  mysqldb:
-    image: mysql:5.7
-    networks:
-      - springmysql-net
-    environment:
-      - MYSQL_ROOT_PASSWORD=1234
-      - MYSQL_DATABASE=news
-      - MYSQL_USER=admin_blog
-      - MYSQL_PASSWORD=adm_blog_adm
-
 networks:
   springmysql-net:

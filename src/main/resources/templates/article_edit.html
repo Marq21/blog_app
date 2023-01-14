@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" Type="text/css" th:href="@{../css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Edit news</title>
+    <script th:href="@{../js/mainJS.js}"></script>
+</head>
+<body>
+<header th:insert="~{blocks/header :: header}"></header>
+<div class="main-container">
+    <div class="inner-cont">
+        <h3>Редактировать новость </h3>
+        <div class="create-article" th:each="editNews : ${editFullTextArticle}">
+            <form method="post">
+                <div class="post-main-container">
+                    <label class="form-label">Имя статьи</label>
+                    <label>
+                        <input type="text" name="name" th:value="${editNews.name}" placeholder="Введите имя новости"
+                               class="form-control">
+                    </label>
+                    <label>
+                        <input type="text" name="img" th:value="${editNews.imageUri}" placeholder="Введите URL изображения"
+                               class="form-control">
+                    </label>
+                    <div class="full-desc-cont">
+                        <label class="form-label" style="color:blue;opacity: 50%">Текст статьи</label>
+                        <label>
+                            <textarea cols="45" rows="15" name="fullDescription"
+                                      class="form-control" th:text="${editNews.fullDescription}"/>
+                        </label>
+                        <button type="submit" class="btn-publish">Обновить</button>
+                        <form th:action="${editNews.id} + '/delete'" method="post">
+                            <button type="submit" class="btn-reset">Удалить</button>
+                        </form>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:insert="~{blocks/footer :: footer}"></footer>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</html>

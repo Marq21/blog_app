@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>American shnizel | news</title>
+    <link th:rel="stylesheet" th:href="@{css/style.css}"/>
+</head>
+<body>
+<header th:insert="~{blocks/header :: header}"></header>
+<div class="all_news_container">
+    <div class="all_news_article_wrapper">
+        <div class="top-views-wrapper">
+            <div class="popular-text">
+                Топ просмотров
+            </div>
+            <div class="top-views-article">
+                <div class="top-views-article-title" th:each="topViewArticle : ${topViewsList}">
+                    <a class="top-views-articles-name" th:href="${topViewArticle.id}"
+                       th:text="${topViewArticle.name}"></a>
+                    <div class="top-views-img-mini-wrapper">
+                        <img class="top-views-img-mini"
+                             src="" alt="mini_img"
+                             th:src="${topViewArticle.imageUri}">
+                    </div>
+                    <div class="view-wrapper-for-top-views">
+                        <img class="view-icon"
+                             th:src="@{../images/view-icon.png}"
+                             height="15" width="15"
+                             alt="watch" src="#"/>
+                        <span class="views-top" th:text="(${topViewArticle.views < 1000}
+                    ? ${topViewArticle.views} :
+                    (${topViewArticle.views >= 1000 and topViewArticle.views < 1000000}
+                    ? (((${topViewArticle.views} - (${topViewArticle.views} % 1000)) / 1000) + (${topViewArticle.views} % 1000))+ ' тыс.' :
+                     (((${topViewArticle.views} - (${topViewArticle.views} % 1000)) / 1000000) + (${topViewArticle.views} % 1000000)) + ' мил.'))"></span>
+                        <span class="view-top-date"
+                              th:text="${#temporals.format(topViewArticle.created_at, 'dd.MM.yyyy')}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="articles-all-news">
+            <div class="article-table-all-news"
+                 th:each="post : ${posts.page}">
+                <!--             th:style="'background: url(' + ${article.imageUri} + ') no-repeat;background-size: 100%; background-position: center center'">-->
+                <a class="article-href-all-news" th:href="${post.id}">
+                    <div class="article-list-all-news">
+                        <div class="news-info">
+                            <div class="name-background-all-news">
+                                <div class="article-name-all-news" th:text="${post.name}"></div>
+                            </div>
+                            <br>
+                            <div class="view-background-all-news">
+                                <div class="view-wrapper-all-news">
+                                    <img class="view-icon"
+                                         th:src="@{../images/view-icon.png}"
+                                         height="20" width="20"
+                                         alt="watch" src="#"/>
+                                    <span class="views" th:text="(${post.views < 1000}
+                    ? ${post.views} :
+                    (${post.views >= 1000 and post.views < 1000000}
+                    ? (((${post.views} - (${post.views} % 1000)) / 1000) + (${post.views} % 1000))+ ' тыс.' :
+                     (((${post.views} - (${post.views} % 1000)) / 1000000) + (${post.views} % 1000000)) + ' мил.'))"></span>
+                                </div>
+                                <div class="date-wrap-all-news">
+                                    <img class="calendar" th:src="@{../images/icons8-календарь-16.png}" height="16"
+                                         width="16"
+                                         alt="calendar" src="#"/>
+                                    <div class="date"
+                                         th:text="${#temporals.format(post.created_at, 'dd.MM.yyyy')}"></div>
+                                    <img class="watch" th:src="@{../images/icons8-настенные-часы-24.png}" height="17"
+                                         width="17"
+                                         alt="watch" src="#"/>
+                                    <div class="date" th:text="${#temporals.format(post.created_at, 'HH:mm')}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="main-img-wrapper">
+                            <img class="main-img-all-news" src="" alt="main_img" th:src="${post.imageUri}">
+                            <div class="full-desc-block-all-news"><p th:text="${post.fullDescription}"></p></div>
+                            <a th:href="${post.id}" class="btn-keep-going-all-news">читать далее</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="ad-block-news">
+            <div class="ad-block4"></div>
+            <div class="ad-block2"></div>
+            <div class="ad-block3"></div>
+        </div>
+    </div>
+
+
+    <nav aria-label="Page navigation" class="paging">
+        <ul class="pagination" th:if="${posts.page.totalPages > 1}">
+            <li class="page-item" th:classappend="${!posts.paging.isPrevEnabled()? 'disabled' : ''}">
+                <a class="page-link" th:href="@{'/news?pageNumber=' + ${posts.paging.pageNumber - 1}}"
+                   tabindex="-1">Пред</a>
+            </li>
+            <th:block th:each="item : ${posts.paging.getItems()}">
+                <li class="page-item" th:classappend="${item.index == posts.paging.pageNumber? 'active' : ''}"
+                    th:if="${item.pageItemType.name() == 'PAGE'}">
+                    <a class="page-link" th:href="@{'/news?pageNumber=' + ${item.index}}"
+                       th:text="${item.index}"></a>
+                </li>
+                <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            </th:block>
+            <li class="page-item" th:classappend="${!posts.paging.isNextEnabled()? 'disabled' : ''}">
+                <a class="page-link" th:href="@{'/news?pageNumber=' + ${posts.paging.pageNumber + 1}}">След</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+<footer th:insert="~{blocks/footer :: footer}"></footer>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{js/mainJS.js}"></script>
+</body>
+</html>

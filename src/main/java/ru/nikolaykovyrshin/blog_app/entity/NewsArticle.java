@@ -26,5 +26,9 @@ public class NewsArticle {
             columnDefinition="TEXT"
     )
     private String fullDescription;
+    @Column( nullable = false )
+    private String imageUri;
+    @Column( nullable = false)
+    private Long views;
     private LocalDateTime created_at;
 }
