@@ -38,15 +38,16 @@
             </div>
         </div>
     </div>
-    <div class="post-main-container" th:each="news : ${fullTextArticle}">
-        <div class="blog-post-title-wrapper">
-            <h2 class="blog-post-title" th:text="${news.name}"></h2>
-        </div>
-        <div class="date-blog-post-wrapper">
+    <div class="post-main-container-wrapper">
+        <div class="post-main-container" th:each="news : ${fullTextArticle}">
+            <div class="blog-post-title-wrapper">
+                <h2 class="blog-post-title" th:text="${news.name}"></h2>
+            </div>
+            <div class="date-blog-post-wrapper">
             <span class="date-blog-post"
                   th:text="'Опубликовано ' + ${#temporals.format(news.created_at, 'dd.MM.yyyy HH:mm')}">
             </span>
-            <span class="main-views-wrapper">
+                <span class="main-views-wrapper">
                 <img class="view-icon"
                      th:src="@{../images/view-icon.png}"
                      height="15" width="15"
@@ -57,18 +58,30 @@
                     ? (((${news.views} - (${news.views} % 1000)) / 1000) + (${news.views} % 1000))+ ' тыс.' :
                      (((${news.views} - (${news.views} % 1000)) / 1000000) + (${news.views} % 1000000)) + ' мил.'))"></span>
             </span>
+            </div>
+            <img class="full-text-main-img" id="full-txt-mainImg" src="" alt="" th:src="${news.imageUri}">
+            <div class="full-text-article-content">
+                <article class="blog-post">
+                    <p th:text="${news.fullDescription}"></p>
+                </article>
+            </div>
         </div>
-        <img class="full-text-main-img" id="full-txt-mainImg" src="" alt="" th:src="${news.imageUri}">
-        <div class="full-text-article-content">
-            <article class="blog-post">
-                <p th:text="${news.fullDescription}"></p>
-                <!--                <div class="main-img-wrapper">-->
-                <!--                </div>-->
-                <!--                <hr>-->
-            </article>
-        </div>
-        <div class="comment-block">
-        </div>
+<!--        <div class="comment-block" >-->
+<!--            <div class="create-comment" th:each="news : ${fullTextArticle}">-->
+<!--                <form th:action="'/' + ${news.id}" method="post">-->
+<!--                    <div class="comment-form-label">Комментарии</div>-->
+<!--                    <div class="comment-form">-->
+<!--                        <label th:value="commentText">-->
+<!--                                <textarea maxlength="2000" placeholder="Написать комментарий" cols="45" rows="15" name="fullDescription"-->
+<!--                                          class="comment-form-control"></textarea>-->
+<!--                        </label>-->
+<!--                        <p>-->
+<!--                            <button type="submit" class="comment-btn-publish">Отправить</button>-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
@@ -81,6 +94,7 @@
         <div class="ad-block3"></div>
     </div>
 </div>
+
 <footer th:insert="~{blocks/footer :: footer}"></footer>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

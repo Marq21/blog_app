@@ -6,7 +6,6 @@ import ru.nikolaykovyrshin.blog_app.exception.NewsNotFoundException;
 
 import java.util.List;
 
-
 public interface NewsService {
 
     void save(NewsArticle article);
