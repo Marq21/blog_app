@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" Type="text/css" th:href="@{css/style.css}">
+<!--    th:href="@{css/style.css}" "@{js/mainJS.js}"-->
+    <link href="../css/style.css" media="all" rel="stylesheet" type="text/css" >
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Creating new</title>
-    <script th:href="@{js/mainJS.js}"></script>
+    <script src="../js/mainJS.js"></script>
 </head>
 <body>
 <header th:insert="~{blocks/header :: header}"></header>
@@ -36,6 +37,9 @@
             </form>
         </div>
     </div>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout" />
+    </form>
     <div class="edit-top-views-wrapper" >
         <div class="edit-top-views-article">
             <div class="edit-top-views-article-title" th:each="editArticle : ${articlesListForEdit}">

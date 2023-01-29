@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" Type="text/css" th:href="@{../css/style.css}">
+    <link rel="stylesheet" Type="text/css" href="../css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>American Shnizel's news</title>
     <script th:href="@{../js/mainJS.js}"></script>
@@ -11,7 +12,9 @@
 <header th:insert="~{blocks/header :: header}"></header>
 
 <div class="container-success">
-    <span >THE NEW WAS SUCCESSFULLY CREATED</span><br><br>
+    <span sec:authentication="name">Username</span>
+    <span sec:authentication="principal.authorities">Roles</span>
+    <span>THE NEW WAS SUCCESSFULLY CREATED</span><br><br>
     <a href="/">На главную</a><br><br>
     <a href="/fresh_news">Свежие новости</a><br><br>
     <a href="/create_article">Создать ещё одну новость</a>

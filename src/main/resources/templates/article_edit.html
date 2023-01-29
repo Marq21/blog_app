@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" Type="text/css" th:href="@{../css/style.css}">
+    <link rel="stylesheet" Type="text/css" href="/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Edit news</title>
-    <script th:href="@{../js/mainJS.js}"></script>
+    <script src="/js/mainJS.js"></script>
 </head>
 <body>
 <header th:insert="~{blocks/header :: header}"></header>
@@ -14,7 +14,7 @@
         <h3>Редактировать новость </h3>
         <div class="create-article" th:each="editNews : ${editFullTextArticle}">
             <form method="post">
-                <div class="post-main-container">
+                <div class="post-main-container-article-edit">
                     <label class="form-label">Имя статьи</label>
                     <label>
                         <input type="text" name="name" th:value="${editNews.name}" placeholder="Введите имя новости"
